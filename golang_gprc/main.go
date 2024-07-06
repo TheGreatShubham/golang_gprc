@@ -3,8 +3,8 @@ package main
 import (
   "log"
 
-  user "Documents\\golang_grpc\\pb" // Replace with your package path
-  "Documents\\golang_grpc\\server" // Replace with your package path
+  user "github.com/TheGreatShubham/golang_gprc/tree/main/golang_gprc/pb" // Replace with your package path
+  "github.com/TheGreatShubham/golang_gprc/tree/main/golang_gprc/server" // Replace with your package path
 )
 
 func main() {

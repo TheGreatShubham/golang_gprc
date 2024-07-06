@@ -4,9 +4,10 @@ import (
   "context"
   "fmt"
   "log"
-  "strings"
+  "net" // Make sure this line is present
+  "google.golang.org/grpc" // Make sure this line is present
 
-  user "github.com/your-username/user-service/pb" // Replace with your package path
+  user "github.com/TheGreatShubham/golang_gprc/tree/main/golang_gprc/pb"
   "google.golang.org/grpc/codes"
   "google.golang.org/grpc/status"
 )
@@ -30,7 +31,7 @@ func (s *server) GetUser(ctx context.Context, req *user.GetUserIDRequest) (*user
   return user, nil
 }
 
-func (s *server) GetUsers(req *user.GetUserIDsRequest, stream user.UserService_GetUsersServer) error {
+func (s *server) GetUsers(ctx context.Context, req *user.GetUserIDsRequest, stream user.UserService_GetUsersServer) error {
   for _, id := range req.GetIds() {
     if id <= 0 {
       return status.Errorf(codes.InvalidArgument, "Invalid user ID: %d", id)
@@ -46,7 +47,7 @@ func (s *server) GetUsers(req *user.GetUserIDsRequest, stream user.UserService_G
   return nil
 }
 
-func (s *server) SearchUsers(ctx context.Context, req *user.SearchRequest) (user.UserService_SearchUsersServer, error) {
+func (s *server) SearchUsers(ctx context.Context, req *user.SearchRequest, stream user.UserService_SearchUsersServer) error {
   criteria := req.GetCriteria()
   if criteria == "" {
     return nil, status.Errorf(codes.InvalidArgument, "Empty search criteria")
