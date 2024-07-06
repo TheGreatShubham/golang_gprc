@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package user;
+
+message User {
+  int32 id = 1;
+  string fname = 2;
+  string city = 3;
+  int64 phone = 4;
+  double height = 5;
+  bool married = 6;
+}
+
+message GetUserIDRequest {
+  int32 id = 1;
+}
+
+message GetUserIDsRequest {
+  repeated int32 ids = 1;
+}
+
+message SearchRequest {
+  string criteria = 1; // Define search criteria based on your needs (e.g., city, phone etc.)
+}
+
+message SearchResponse {
+  repeated User users = 1;
+}
+
+service UserService {
+  rpc GetUser (GetUserIDRequest) returns (User);
+  rpc GetUsers (GetUserIDsRequest) returns (stream User);
+  rpc SearchUsers (SearchRequest) returns (stream User);
+}
